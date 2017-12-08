@@ -1,16 +1,30 @@
 package com.tegess.ketsiso.simulationlauncher
 
-import com.tegess.ketsiso.simulationlauncher.simulations.TestSimulation
-import io.gatling.app.Gatling
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import io.gatling.core.config.GatlingPropertiesBuilder
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
 
 object Launcher extends App {
 
-  val builder = new GatlingPropertiesBuilder()
+  SpringApplication.run(classOf[MainConfig])
+}
 
-  builder.simulationClass(classOf[TestSimulation].getName)
+@EnableAutoConfiguration
+@Configuration
+@ComponentScan
+class MainConfig {
 
-  Gatling.fromMap(builder.build)
+  @Bean
+  def gatlingBuilder() = new GatlingPropertiesBuilder()
 
+  @Bean
+  def mapper: ObjectMapper = {
+    val mapper = new ObjectMapper()
+    mapper.registerModule(DefaultScalaModule)
+    mapper
+  }
 }
 

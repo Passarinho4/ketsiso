@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.BUILD-SNAPSHOT"
+    }
+}
+
 
 apply plugin: 'java'
 
@@ -5,8 +15,18 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url 'https://repo.spring.io/libs-milestone' }
+    maven { url "https://repo.spring.io/snapshot" }
 }
+
+apply plugin: 'org.springframework.boot'
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile("org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE")
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.12', version: '2.9.1'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
+    compile 'com.typesafe.scala-logging:scala-logging_2.12:3.7.2'
+    compile 'org.scala-lang.modules:scala-java8-compat_2.12:0.8.0'
+    compile group: 'com.google.guava', name: 'guava', version: '21.0'
 }

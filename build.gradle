@@ -1,6 +1,9 @@
 group 'com.tegess'
 version '1.0-SNAPSHOT'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.2'
+}
 
 allprojects {
     apply plugin: 'java'
@@ -16,11 +19,8 @@ allprojects {
         compile 'org.scala-lang:scala-library:2.12.3'
         compile group: 'com.avsystem.commons', name: 'commons-core_2.12', version: '1.25.2'
         compile group: 'io.gatling', name: 'gatling-core', version: '2.3.0'
-        compile group: 'io.gatling', name: 'gatling-app', version: '2.3.0'
-        compile group: 'io.gatling', name: 'gatling-http', version: '2.3.0'
         compile group: 'io.gatling', name: 'gatling-compiler', version: '2.3.0'
         compile group: 'io.gatling', name: 'gatling-charts', version: '2.3.0'
-        compile group: 'io.gatling', name: 'gatling-test-framework', version: '2.3.0'
         compile group: 'io.gatling.highcharts', name: 'gatling-charts-highcharts-bundle', version: '2.3.0'
         compile group: 'io.gatling.highcharts', name: 'gatling-highcharts', version: '2.3.0', ext: 'pom'
 
