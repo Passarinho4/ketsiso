@@ -1,2 +1,3 @@
 rootProject.name = 'ketsiso'
+include 'simulationlauncher'
 
