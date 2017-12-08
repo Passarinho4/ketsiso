@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Button} from 'react-bootstrap';
 
+import rest from 'rest';
 
-function f() {
-    const elem = new Date().getMilliseconds();
-    ReactDOM.render(
-        <h1>{elem}</h1>,
-        document.getElementById('root')
-    );
+class TestsTable extends React.Component {
+
+    constructor(props) {
+        super(props);
+        rest('http://localhost:8080/gatling/results')
+            .then(res => console.log(res.entity))
+    }
+
+    render() {
+        return "<h1>DUPA JASIA</h1>";
+    }
+
 }
 
 ReactDOM.render(
-    <Button bsStyle="success" bsSize="small" onClick={function () {
-        alert("ok")
-    }}>
-        Something
-    </Button>,
+    <TestsTable>Lol</TestsTable>,
     document.getElementById('root')
-)
-
-//setInterval(f, 10);
+);
