@@ -7,17 +7,26 @@ class TestsTable extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {};
+        this.state.en = [];
         rest('http://localhost:8080/gatling/results')
-            .then(res => console.log(res.entity))
+            .then(res => {
+                console.log(res.entity);
+                this.setState(prev => ({
+                        en: res.entity
+                    }
+                ))
+            });
     }
 
     render() {
-        return "<h1>DUPA JASIA</h1>";
+        return (<h1>Links: {this.state.en}</h1>);
     }
+
 
 }
 
 ReactDOM.render(
-    <TestsTable>Lol</TestsTable>,
+    <TestsTable/>,
     document.getElementById('root')
 );
