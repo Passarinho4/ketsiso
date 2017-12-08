@@ -20,7 +20,7 @@ class TestsTable extends React.Component {
     }
 
     render() {
-        return (<h1>Links: {this.state.en}</h1>);
+        return (<h2>Links: {this.state.en}</h2>);
     }
 
 
