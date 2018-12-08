@@ -1,14 +1,6 @@
 package com.tegess.ketsiso.simulationlauncher.api
 
-import com.tegess.ketsiso.simulationlauncher.simulations.{TestSimulation, TransferMeasureSimulation}
-import io.gatling.app.Gatling
-import io.gatling.core.config.GatlingPropertiesBuilder
-import org.apache.commons.io.FileUtils
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.io.ResourceLoader
-import org.springframework.web.bind.annotation._
-
-@RestController
+/*@RestController
 class GatlingApi {
 
   @Autowired var resourceLoader: ResourceLoader = _
@@ -56,4 +48,4 @@ class GatlingApi {
   }
 
 
-}
+}*/

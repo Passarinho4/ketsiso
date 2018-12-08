@@ -7,7 +7,7 @@ import io.gatling.http.Predef._
 class TransferMeasureSimulation extends Simulation {
 
   val httpConf = http
-    .baseURL("http://localhost:8090")
+    .baseUrl("http://localhost:8090")
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8") // 6
     .doNotTrackHeader("1")
     .acceptLanguageHeader("en-US,en;q=0.5")

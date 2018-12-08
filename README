@@ -1,0 +1,8 @@
+This repo contains tool for testing Linkerd Service Mesh Network Policies.
+
+It contains backend part with test cases implemented using Gatling and REST API for management.
+The frontend part cointains simple html&js file with manager for the backend part.
+
+Both should be build with proper Dockerfiles (./scripts/..)
+
+or use build.sh which is located in this directory.

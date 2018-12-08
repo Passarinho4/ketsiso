@@ -27,7 +27,7 @@
     let startTestButton = $("#startTestButton");
     let testResults = $("#testResults");
 
-    $.get("http://localhost:8080/gatling/tests", function (res) {
+    $.get("http://localhost:8080/tests", function (res) {
         res.forEach(function (test) {
             selectTest.append(new Option(test, test));
         });
@@ -35,7 +35,7 @@
 
     startTestButton.click(function (e) {
         let selectedTestCase = selectTest.val();
-        $.post("http://localhost:8080/gatling/tests/" + selectedTestCase, function (e) {
+        $.post("http://localhost:8080/tests?testName=" + selectedTestCase, function (e) {
             refreshTable();
         })
     });
@@ -44,10 +44,10 @@
 
     function refreshTable() {
         testResults.empty();
-        $.get("http://localhost:8080/gatling/results", function (res) {
+        $.get("http://localhost:8080/results", function (res) {
             res.forEach(function (result) {
                 let line = $("<div>" +
-                    "<a href='http://localhost:8080/results/" + result + "/index.html'>" + result + "</a>" +
+                    "<a href='http://localhost:8080/resources/static/results/" + result + "/index.html'>" + result + "</a>" +
                     "<button onclick='remove(\"" + result + "\")'>DELETE</button>" +
                     "</div>"
                 );
@@ -58,7 +58,7 @@
 
     function remove(test) {
         $.ajax({
-            url: "http://localhost:8080/gatling/results/" + test,
+            url: "http://localhost:8080/gatling/results?id=" + test,
             type: 'DELETE',
             success: function (res) {
                 refreshTable();

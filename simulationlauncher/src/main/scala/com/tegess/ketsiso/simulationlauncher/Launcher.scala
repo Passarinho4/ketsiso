@@ -1,30 +1,30 @@
 package com.tegess.ketsiso.simulationlauncher
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import io.gatling.core.config.GatlingPropertiesBuilder
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.context.annotation.{Bean, ComponentScan, Configuration}
+import com.tegess.ketsiso.simulationlauncher.api.Handler
+import org.eclipse.jetty.server.Server
+import org.eclipse.jetty.servlet.{DefaultServlet, ServletContextHandler, ServletHolder}
 
-object Launcher extends App {
+object Launcher {
 
-  SpringApplication.run(classOf[MainConfig])
-}
+  def main(args: Array[String]): Unit = {
+    val server = new Server(8080)
 
-@EnableAutoConfiguration
-@Configuration
-@ComponentScan
-class MainConfig {
+    val handler = new ServletContextHandler()
 
-  @Bean
-  def gatlingBuilder() = new GatlingPropertiesBuilder()
+    val resourcesHandler = new ServletHolder("resources", classOf[DefaultServlet])
+    resourcesHandler.setInitParameter("resourceBase", "")
+    resourcesHandler.setInitParameter("dirAllowed", "true")
+    resourcesHandler.setInitParameter("pathInfoOnly", "true")
 
-  @Bean
-  def mapper: ObjectMapper = {
-    val mapper = new ObjectMapper()
-    mapper.registerModule(DefaultScalaModule)
-    mapper
+    server.setHandler(handler)
+
+    handler.addServlet(classOf[Handler], "/*")
+    handler.addServlet(resourcesHandler, "/resources/*")
+
+    server.start()
+    server.join()
+
   }
+
 }
 
