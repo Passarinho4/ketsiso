@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST Manager</title>
+
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<select id="selectTest"></select>
+
+<button id="startTestButton">
+    Start Test
+</button>
+
+<div id="testResults">
+
+</div>
+
+<script type="application/javascript">
+
+    let selectTest = $("#selectTest");
+    let startTestButton = $("#startTestButton");
+    let testResults = $("#testResults");
+
+    $.get("http://localhost:8080/gatling/tests", function (res) {
+        res.forEach(function (test) {
+            selectTest.append(new Option(test, test));
+        });
+    });
+
+    startTestButton.click(function (e) {
+        let selectedTestCase = selectTest.val();
+        $.post("http://localhost:8080/gatling/tests/" + selectedTestCase, function (e) {
+            refreshTable();
+        })
+    });
+
+    refreshTable();
+
+    function refreshTable() {
+        testResults.empty();
+        $.get("http://localhost:8080/gatling/results", function (res) {
+            res.forEach(function (result) {
+                let line = $("<div>" +
+                    "<a href='http://localhost:8080/results/" + result + "/index.html'>" + result + "</a>" +
+                    "<button onclick='remove(\"" + result + "\")'>DELETE</button>" +
+                    "</div>"
+                );
+                testResults.append(line)
+            })
+        });
+    }
+
+    function remove(test) {
+        $.ajax({
+            url: "http://localhost:8080/gatling/results/" + test,
+            type: 'DELETE',
+            success: function (res) {
+                refreshTable();
+            }
+        })
+    }
+
+</script>
+</body>
+</html>
