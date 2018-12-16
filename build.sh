@@ -9,7 +9,7 @@ cp -r simulationlauncher/build/libs/simulationlauncher scripts/backend
 
 cp simulationlaunchergui/index.html scripts/backend/
 
-cd scripts/simulationlauncher
+cd scripts/backend/
 
 docker build -t ketsiso .
 
@@ -19,6 +19,7 @@ docker push passarinho/ketsiso
 
 cd ..
 cd ..
+
 gradle clean
 rm -rf scripts/backend/simulationlauncher
 rm -f scripts/backend/index.html
