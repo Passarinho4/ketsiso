@@ -4,6 +4,9 @@ import io.gatling.core.Predef._
 import io.gatling.core.scenario.Simulation
 import io.gatling.http.Predef._
 
+import scala.concurrent.duration._
+import scala.language.postfixOps
+
 class TransferMeasureSimulation extends Simulation {
 
   val httpConf = http
@@ -20,6 +23,6 @@ class TransferMeasureSimulation extends Simulation {
     .pause(5)
 
   setUp(
-    scn.inject(atOnceUsers(1))
+    scn.inject(constantUsersPerSec(20) during (10 seconds))
   ).protocols(httpConf)
 }
