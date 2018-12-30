@@ -3,7 +3,9 @@ package com.tegess.ketsiso.simulationlauncher.simulations
 import io.gatling.core.Predef._
 import io.gatling.core.scenario.Simulation
 import io.gatling.http.Predef._
+import javax.servlet.http.HttpServletRequest
 
+import scala.collection.mutable
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
@@ -22,10 +24,37 @@ class TransferMeasureSimulation extends Simulation {
 
   val scn = scenario("TransferMeasureSimulation")
     .exec(http("request_1")
-      .get("/xd?response_size=200"))
+      .get(s"/xd?response_size=${TransferMeasureSimulation.getResponseSize}"))
     .pause(5)
 
   setUp(
-    scn.inject(constantUsersPerSec(20) during (10 seconds))
+    scn.inject(constantUsersPerSec(TransferMeasureSimulation.getUsersPerSec) during TransferMeasureSimulation.getDuring)
   ).protocols(httpConf)
+}
+
+object TransferMeasureSimulation {
+  val responseSize = "RESPONSE_SIZE"
+  val usersPerSec = "USERS_PER_SEC"
+  val during = "DURING"
+
+  val params = new mutable.HashMap[String, String]()
+
+  params.put(responseSize, "200")
+  params.put(usersPerSec, "20")
+  params.put(during, "10")
+
+  def getResponseSize = params(responseSize).toInt
+
+  def getUsersPerSec = params(usersPerSec).toInt
+
+  def getDuring = params(during).toInt seconds
+
+  def handle(req: HttpServletRequest) = {
+    Option(req.getParameter(responseSize))
+      .foreach(size => params.put(responseSize, size))
+    Option(req.getParameter(usersPerSec))
+      .foreach(users => params.put(usersPerSec, users))
+    Option(req.getParameter(during))
+      .foreach(d => params.put(during, d))
+  }
 }

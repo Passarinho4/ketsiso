@@ -49,6 +49,9 @@ class Handler extends HttpServlet {
   override def doPost(req: HttpServletRequest, resp: HttpServletResponse): Unit = {
     val testName = req.getParameter("testName")
     if (availableTests.contains(testName)) {
+      if (testName == classOf[TransferMeasureSimulation].getSimpleName) {
+        TransferMeasureSimulation.handle(req)
+      }
       val builder = new GatlingPropertiesBuilder
       builder.simulationClass(availableTests(testName))
       builder.resultsDirectory("static/results")
