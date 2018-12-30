@@ -9,9 +9,12 @@ import scala.language.postfixOps
 
 class TransferMeasureSimulation extends Simulation {
 
+  //val nodeIP = System.getenv("NODE_IP")
+
   val httpConf = http
-    .baseUrl("http://testserver:8090")
+    .baseUrl(s"http://l5d:4140/")
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8") // 6
+    .header("Host", "testserver")
     .doNotTrackHeader("1")
     .acceptLanguageHeader("en-US,en;q=0.5")
     .acceptEncodingHeader("gzip, deflate")
