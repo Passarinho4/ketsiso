@@ -1,5 +1,7 @@
 package com.tegess.ketsiso.simulationlauncher.api
 
+import java.util.UUID
+
 import com.tegess.ketsiso.simulationlauncher.simulations.{TestSimulation, TransferMeasureSimulation}
 import io.gatling.app.Gatling
 import io.gatling.core.config.GatlingPropertiesBuilder
@@ -8,6 +10,8 @@ import org.apache.commons.io.FileUtils
 import org.springframework.core.io.{DefaultResourceLoader, ResourceLoader}
 
 class Handler extends HttpServlet {
+
+  private val instanceID = UUID.randomUUID().toString
 
   private val gatlingBuilder = new GatlingPropertiesBuilder()
   private val availableTests = Map(
@@ -33,6 +37,8 @@ class Handler extends HttpServlet {
       val root = resourceLoader.getResource("file:static/results")
       val result = root.getFile.listFiles().toList.map(_.getName)
       resp.getWriter.print(listToJson(result))
+    } else {
+      resp.getWriter.print(s"INSTANCE_ID = $instanceID")
     }
   }
 
