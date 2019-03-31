@@ -13,8 +13,12 @@ class TransferMeasureSimulation extends Simulation {
 
   //val nodeIP = System.getenv("NODE_IP")
 
+  val l5dHost = System.getenv("NODE_IP")
+
+  println(s"Szymek [$l5dHost]")
+
   val httpConf = http
-    .baseUrl(s"http://l5d:4140/")
+    .baseUrl(s"http://$l5dHost:4140/")
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8") // 6
     .header("Host", "testserver")
     .doNotTrackHeader("1")
